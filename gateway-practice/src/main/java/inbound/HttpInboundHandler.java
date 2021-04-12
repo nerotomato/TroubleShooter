@@ -7,6 +7,8 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import outbound.netty4.NettyHttpClient;
+import outbound.netty4.NettyHttpClientOutboundHandler;
 import outbound.okhttp.MyOkhttpOutboundHandler;
 
 import java.util.List;
@@ -18,11 +20,13 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 
     private MyHttpRequestFilter myHttpRequestFilter = new MyHttpRequestFilter();
     //private MyHttpOutBoundHandler myHandler;
-    private MyOkhttpOutboundHandler myHandler;
+    //private MyOkhttpOutboundHandler myHandler;
+    //private MyOkhttpOutboundHandler myHandler;
+    private NettyHttpClient myHandler;
     public HttpInboundHandler(List<String> proxyServer) {
         this.proxyServer = proxyServer;
         //this.myHandler = new MyHttpOutBoundHandler(this.proxyServer);
-        this.myHandler = new MyOkhttpOutboundHandler(this.proxyServer);
+        this.myHandler = new NettyHttpClient(this.proxyServer);
     }
 
     @Override
