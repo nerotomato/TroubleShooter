@@ -1,18 +1,18 @@
 package com.nerotomato.jdbc;
 
+import com.nerotomato.utils.DruidUtil;
 import com.nerotomato.utils.HikariUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 /**
- * 使用HikariCP连接池进行JDBC操作
- * Created by nero on 2021/4/21.
+ * 使用Druid连接池进行JDBC操作
+ * Created by nero on 2021/4/27.
  */
-public class HikariCPDemo {
+public class DruidDemo {
     private static String insertSql = "INSERT INTO ums_member\n" +
             "(username, password, nickname, telephone, status, create_time, gender, birthday, city, job)\n" +
             "VALUES(?, ?, ?, ?, 1, NOW(), 1, NOW(), 'Shanghai', 'Java Developer')";
@@ -31,9 +31,9 @@ public class HikariCPDemo {
         long start = System.currentTimeMillis();
         System.out.println("开始时间：" + start);
         try {
-            conn = HikariUtil.getConnection();
+            conn = DruidUtil.getConnection();
             //开启事务
-            HikariUtil.beginTransaction(conn);
+            DruidUtil.beginTransaction(conn);
 
             //批处理
             /*pstat = conn.prepareStatement(insertSql);
@@ -63,7 +63,7 @@ public class HikariCPDemo {
 
             //查询操作
             /*pstat = conn.prepareStatement(querySql);
-            pstat.setObject(1, "test689%");
+            pstat.setObject(1, "%test689%");
             resultSet = pstat.executeQuery();
             int count = 0;
             while (resultSet.next()) {
@@ -81,11 +81,11 @@ public class HikariCPDemo {
             System.out.println(result);*/
 
             //提交事务
-            HikariUtil.commitTransaction(conn);
+            DruidUtil.commitTransaction(conn);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             //回滚事务
-            HikariUtil.rollBackTransaction(conn);
+            DruidUtil.rollBackTransaction(conn);
         } finally {
             try {
                 if (resultSet != null) {
@@ -106,30 +106,5 @@ public class HikariCPDemo {
         long end = System.currentTimeMillis();
         System.out.println("结束时间：" + end);
         System.out.println("总耗时：" + (end - start));
-    }
-
-    private static String getRandomTelNum() {
-        String[] startNums = {"133", "149", "153", "173", "177",
-                "180", "181", "189", "199", "130", "131", "132",
-                "145", "155", "156", "166", "171", "175", "176", "185", "186", "166", "134", "135",
-                "136", "137", "138", "139", "147", "150", "151", "152", "157", "158", "159", "172",
-                "178", "182", "183", "184", "187", "188", "198", "170", "171"};
-        //随机出真实号段   使用数组的length属性，获得数组长度，
-        //通过Math.random（）*数组长度获得数组下标，从而随机出前三位的号段
-        int firstIndex = (int) (Math.random() * startNums.length);
-        String telFirstThreeNum = startNums[firstIndex];
-        //随机出剩下的8位数
-        String telLastNum = "";
-        //定义尾号，尾号是8位
-        final int telNumLength = 8;
-        //循环剩下的位数
-        for (int i = 0; i < telNumLength; i++) {
-            //每次循环都从0~9挑选一个随机数
-            telLastNum += (int) (Math.random() * 10);
-        }
-        //最终将号段和尾数连接起来
-        String phoneNum = telFirstThreeNum + telLastNum;
-
-        return phoneNum;
     }
 }
