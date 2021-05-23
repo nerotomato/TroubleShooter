@@ -1,4 +1,4 @@
-package com.nerotomato;
+package com.nerotomato.shardingsphere.proxy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Created by nero on 2021/4/19.
  */
-//将APP标记为@EnableAutoConfiguration
 @SpringBootApplication
-public class SpringbootDemoApplication {
+public class SpringBootDemoApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootDemoApplication.class, args);
+        SpringApplication.run(SpringBootDemoApplication.class, args);
     }
 }
 
