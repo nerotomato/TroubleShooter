@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nerotomato.mapper.UmsMemberMapper">
+<mapper namespace="com.nerotomato.dynamic.mapper.UmsMemberMapper">
 
     <!-- 可根据自己的需求，是否要使用 -->
     <!--jdbcType需要全部是大写-->
-    <resultMap type="com.nerotomato.entity.UmsMember" id="umsMemberMap">
+    <resultMap type="com.nerotomato.dynamic.entity.UmsMember" id="umsMemberMap">
 
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
@@ -32,7 +32,7 @@
         where 1=1
     </select>
 
-    <insert id="insertMember" parameterType="com.nerotomato.entity.UmsMember">
+    <insert id="insertMember" parameterType="com.nerotomato.dynamic.entity.UmsMember">
         INSERT INTO ums_member
         (username, password, nickname, telephone, status, create_time, gender, birthday, city, job)
         VALUES(#{username}, #{password}, #{nickname}, #{telephone}, #{status}, #{create_time}, #{gender},
@@ -45,7 +45,7 @@
         WHERE username= #{username}
     </delete>
 
-    <update id="updateMemberbyUsername" parameterType="com.nerotomato.entity.UmsMember">
+    <update id="updateMemberbyUsername" parameterType="com.nerotomato.dynamic.entity.UmsMember">
         UPDATE ums_member
         SET username=#{username}, password=#{password}, nickname=#{nickname}, telephone=#{telephone}, status=#{status},
         create_time=#{create_time}, gender=#{gender}, birthday=#{birthday},
