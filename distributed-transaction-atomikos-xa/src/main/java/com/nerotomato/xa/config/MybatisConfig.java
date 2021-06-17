@@ -13,7 +13,10 @@ import javax.sql.DataSource;
 
 /**
  * Created by nero on 2021/5/31.
+ * 若springboot配置文件配置了mybatis-plus
+ * 这里就不用配置mybatis配置类来注入datasource
  */
+/*
 @Configuration
 public class MybatisConfig {
 
@@ -28,3 +31,4 @@ public class MybatisConfig {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
+*/
