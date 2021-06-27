@@ -1,5 +1,6 @@
-1.replaction异步复制方式
-#主数据库
+**1.replaction异步复制方式**
+**#主数据库**
+**windows下创建**
 
 ```shell
 docker run --restart=always --privileged=true ^
@@ -14,7 +15,24 @@ docker run --restart=always --privileged=true ^
  -p 3306:3306 --name mysql-master -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
 ```
 
-#从数据库
+**linux环境创建**
+
+```shell
+docker run --restart=always --privileged=true \
+ -v /home/nerotomato/Develop/docker/mysql-master/mysql-files:/var/lib/mysql-files \
+ -v /home/nerotomato/Develop/docker/mysql-master/log:/var/log/mysql \
+ -v /home/nerotomato/Develop/docker/mysql-master/data:/var/lib/mysql \
+ -v /home/nerotomato/Develop/docker/mysql-master/my.cnf:/etc/mysql/my.cnf \
+ -v /home/nerotomato/Develop/docker/mysql-master/conf.d:/etc/mysql/conf.d \
+ -e TZ=Asia/Shanghai \
+ --net my-bridge \
+ --ip 172.18.0.3 \
+ -p 3306:3306 --name mysql-master -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
+```
+
+**#从数据库**
+
+**windows下创建**
 
 ```shell
 docker run --restart=always --privileged=true ^
@@ -28,6 +46,23 @@ docker run --restart=always --privileged=true ^
 --ip 172.18.0.4 ^
 -p 3307:3306 --name mysql-slave -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
 ```
+
+**linux环境创建**
+
+```shell
+docker run --restart=always --privileged=true \
+-v /home/nerotomato/Develop/docker/mysql-slave/mysql-files:/var/lib/mysql-files \
+-v /home/nerotomato/Develop/docker/mysql-slave/log:/var/log/mysql \
+-v /home/nerotomato/Develop/docker/mysql-slave/data:/var/lib/mysql \
+-v /home/nerotomato/Develop/docker/mysql-slave/my.cnf:/etc/mysql/my.cnf \
+-v /home/nerotomato/Develop/docker/mysql-slave/conf.d:/etc/mysql/conf.d \
+-e TZ=Asia/Shanghai \
+--net my-bridge \
+--ip 172.18.0.4 \
+-p 3307:3306 --name mysql-slave -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
+```
+
+
 
 #修改容器中/etc/mysql/my.cnf 文件权限为644，否则mysql会忽略该文件。因为如果是权限777，任何一个用户都可以改my.cnf，存在很大的安全隐患。
 
@@ -58,7 +93,7 @@ FLUSH PRIVILEGES;
 #查看主库状态
 
 ```sql
-show master status；
+show master status;
 ```
 
 #登录从库执行操作
@@ -69,8 +104,8 @@ CHANGE MASTER TO
      MASTER_USER='reader',
      MASTER_PORT=3306,
      MASTER_PASSWORD='123456',
-     MASTER_LOG_FILE='mysql-bin.000026',
-     MASTER_LOG_POS=156;
+     MASTER_LOG_FILE='mysql-bin.000001',
+     MASTER_LOG_POS=1165;
 ```
 
 ​	 

@@ -40,11 +40,12 @@ CREATE TABLE `oms_order_0` (
   `comment_time` datetime DEFAULT NULL COMMENT '评价时间',
   `create_time` datetime DEFAULT NULL COMMENT '提交时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_order_id` (`order_id`)
 ) DEFAULT CHARSET=utf8 COMMENT='订单表';
 
-#添加唯一索引
-ALTER TABLE oms_order_0 ADD unique idx_order_id (order_id);
+#添加唯一索引 order_id
+#ALTER TABLE oms_order_0 ADD unique idx_order_id (order_id);
 ```
 
 3.shardingsphere-proxy 配置
