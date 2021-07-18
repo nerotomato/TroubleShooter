@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: demo-eureka-server
+
+eureka:
+  instance:
+    prefer-ip-address: false
+    hostname: node02
+  client:
+    serviceUrl:
+      defaultZone: http://node01:8081/eureka/,http://node03:8083/eureka/
+    registerWithEureka: true
+    fetchRegistry: true

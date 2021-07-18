@@ -1,0 +1,23 @@
+server:
+  port: 8202
+spring:
+  application:
+    name: user-service
+eureka:
+#  instance:
+#    prefer-ip-address: true
+    #hostname: userService02
+  client:
+    registerWithEureka: true #注册到Eureka的注册中心
+    fetchRegistry: true #获取注册实例列表
+    serviceUrl:
+      #defaultZone: http://node01:8081/eureka/,http://node02:8082/eureka/,http://node03:8083/eureka/ #配置注册中心地址
+      defaultZone: http://nerotomato:123456@localhost:8084/eureka/
+#spring.cloud.inetutils: preferred-networks=192.168.1.
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: USER-SERVICE
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合
+  try-host: http://localhost:${server.port}
