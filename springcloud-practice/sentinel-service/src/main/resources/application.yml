@@ -1,0 +1,51 @@
+server:
+  port: 8401
+spring:
+  application:
+    name: sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置Nacos地址
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #配置sentinel dashboard地址
+        #spring.cloud.sentinel.transport.port将在应用程序的相应服务器上启动一个 HTTP Server，该服务器将与 Sentinel 仪表板进行交互。
+        #例如，如果在 Sentinel 仪表板中添加了速率限制规则，则规则数据将被推送到 HTTP Server 并由 HTTP Server 接收，HTTP Server 进而将规则注册到 Sentinel
+        port: 8719
+      #配置nacos数据源
+      #在配置中心创建限流规则，配置中心将限流规则推送到客户端；
+      #Sentinel控制台也从配置中心去获取配置信息
+      #nacos dataId组成格式和配置文件对应关系
+      #${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: ${spring.application.name}-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+feign:
+  sentinel:
+    #打开sentinel对feign的支持 sentinel实现服务降级熔断除了使用自己注解的断路功能之外，还可以整合openfeign来实现断路功能
+    enabled: true
+    #上面如果不是使用的sentinel，而是springcloud最新版本20版本与openfeign整合的话，就需要下面这样开启feign对springcloud自身的断路器的支持，并引入hystirx或者resilience4j的依赖实现断路功能
+#  circuitbreaker:
+#    enabled: true #在Feign中开启circuitbreaker
+service-url:
+  user-service: http://nacos-user-service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: SENTINEL-SERVICE
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合
+  try-host: http://localhost:${server.port}

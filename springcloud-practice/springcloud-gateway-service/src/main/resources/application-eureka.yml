@@ -1,0 +1,73 @@
+server:
+  port: 9202
+
+service-url:
+  user-service: lb://user-service #此处表示使用lb协议 启用gateway的负载均衡功能
+
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能
+          lower-case-service-id: true #使用小写服务名,默认是大写
+      routes:
+        - id: path_route #路由ID
+          uri: ${service-url.user-service} #匹配后路由地址
+          predicates: #断言,路径匹配的进行路由
+            - Method=GET
+            #- Path=/user/getByUsername, /user/create, /user/update, /user/delete
+            #- Path=/user/create, /user/update, /user/delete
+          filters:
+            - name: CircuitBreaker #设置断路器，CircuitBreaker表示使用推荐的resilience4j
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+            - name: RequestRateLimiter #设置限流过滤器
+              args:
+                #第一种配置方式
+#                redis-rate-limiter.replenishRate: 1 #每秒允许处理的请求数量
+#                redis-rate-limiter.burstCapacity: 2 #每秒最大处理的请求数量 这是令牌桶可以容纳的令牌数量。将此值设置为零会阻止所有请求。
+#                redis-rate-limiter.requestedTokens: 1 #每个请求从存储桶中获取的令牌数量，默认为1
+#                key-resolver: "#{@ipKeyResolver}"     #限流策略，对应策略的Bean
+
+                #第二种配置方式
+                rate-limiter: "#{@myRedisRateLimiter}" #指定java配置类方式配置的限流过滤器
+                key-resolver: "#{@ipKeyResolver}"  #限流策略，对应策略的Bean
+            - name: Retry #设置重试过滤器
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY
+                methods: GET,POST
+                backoff:
+                  firstBackoff: 10ms
+                  maxBackoff: 50ms
+                  factor: 2
+                  basedOnPreviousValue: false
+      #如果不指定限流策略KeyResolver的KEY,即KeyResolver具体实现,则默认所有请求都会被拒绝.可以指定deny-empty-key为false(允许空key的出现).
+      #empty-key-status-code指定空KEY情况下的状态码, deny-empty-key为true的情况下默认403.
+      filter:
+        request-rate-limiter:
+          deny-empty-key: false
+          #empty-key-status-code: 403
+  #redis配置 用于网关限流过滤器redis-rate-limiter使用。注意，这里redis不能使用redis集群，不然限流没有效果.
+  redis:
+    host: localhost
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 16
+        max-wait: 10ms
+#注册到注册中心 实现gateway动态路由以及负载均衡功能
+eureka:
+  client:
+    registerWithEureka: true #注册到Eureka的注册中心
+    fetchRegistry: true #获取注册实例列表
+    serviceUrl:
+      defaultZone: http://nerotomato:123456@localhost:8084/eureka/
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

@@ -1,0 +1,16 @@
+server:
+  port: 9501
+spring:
+  profiles:
+    active: dev
+  application:
+    name: micro-api-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  #暴露actuator监控所有端点

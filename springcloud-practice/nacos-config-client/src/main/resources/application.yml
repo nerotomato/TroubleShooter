@@ -1,0 +1,4 @@
+spring:
+  #spring.profiles.active 必须指定，在这里或者在bootstrap.yml都行
+  profiles:
+    active: dev

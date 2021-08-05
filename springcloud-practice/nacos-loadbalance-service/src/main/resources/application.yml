@@ -1,0 +1,38 @@
+logging:
+  level:
+    root: info
+
+server:
+  port: 8301
+spring:
+  application:
+    name: nacos-ribbon-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置Nacos地址
+     #设置spring cloud loadbalancer，弃用ribbon
+#    loadbalancer:
+#      ribbon:
+#        enabled: false
+
+#nacos禁用ribbon
+#ribbon:
+#  nacos:
+#    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+serviceUrl:
+  userService: http://nacos-user-service #配置调用路径
+
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: Nacos-Ribbon Service
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合
+  try-host: http://localhost:${server.port}

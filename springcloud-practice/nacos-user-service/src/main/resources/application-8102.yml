@@ -1,0 +1,22 @@
+server:
+  port: 8102
+spring:
+  application:
+    name: nacos-user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置Nacos地址
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: NACOS-USER-SERVICE
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合
+  try-host: http://localhost:${server.port}

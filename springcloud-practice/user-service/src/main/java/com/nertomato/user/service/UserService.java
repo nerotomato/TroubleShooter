@@ -8,11 +8,11 @@ import com.nertomato.user.entity.User;
  */
 public interface UserService {
 
-    Object save(User user);
+    User create(User user);
 
-    Object get(String username);
+    User getByUsername(String username);
 
-    Object update(User user);
+    User update(User user);
 
-    Object delete(String username);
+    User delete(String username);
 }

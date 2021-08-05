@@ -20,12 +20,25 @@
         <module>springcloud-eureka</module>
         <module>user-service</module>
         <module>ribbon-service</module>
+        <module>open-feign-service</module>
+        <module>springcloud-gateway-service</module>
+        <module>nacos-user-service</module>
+        <module>nacos-loadbalance-service</module>
+        <module>nacos-config-client</module>
+        <module>sentinel-service</module>
+        <module>oauth2-server</module>
+        <module>oauth2-jwt-server</module>
+        <module>oauth2-client</module>
+        <module>micro-oauth2-auth</module>
+        <module>micro-oauth2-gateway</module>
+        <module>micro-api-service</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2020.0.RC1</spring-cloud-alibaba.version>
     </properties>
 
     <!--
@@ -41,6 +54,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring-cloud-alibaba相关依赖-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

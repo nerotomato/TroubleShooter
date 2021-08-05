@@ -1,0 +1,12 @@
+server:
+  port: 9401
+spring:
+  application:
+    name: oauth2-jwt-server
+  redis: #redis相关配置 用于存储token令牌, oauth2自身 token + redis
+    host: localhost
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 16
+        max-wait: 10ms

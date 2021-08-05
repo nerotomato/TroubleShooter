@@ -1,0 +1,25 @@
+server:
+  port: 8701
+spring:
+  application:
+    name: open-feign-service
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://nerotomato:123456@localhost:8084/eureka/
+feign:
+  circuitbreaker:
+    enabled: true #在Feign中开启circuitbreaker
+
+logging:
+  level:
+    com.nerotomto.openfeign.service.UserService: debug
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: OPEN-FEIGN-SERVICE
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合
+  try-host: http://localhost:${server.port}

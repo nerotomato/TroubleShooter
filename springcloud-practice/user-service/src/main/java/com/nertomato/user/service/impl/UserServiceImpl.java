@@ -16,22 +16,22 @@ public class UserServiceImpl implements UserService {
     private static final Map<String, User> userMap = new ConcurrentHashMap();
 
     @Override
-    public Object save(User user) {
+    public User create(User user) {
         return userMap.put(user.getUsername(), user);
     }
 
     @Override
-    public Object get(String username) {
+    public User getByUsername(String username) {
         return userMap.get(username);
     }
 
     @Override
-    public Object update(User user) {
+    public User update(User user) {
         return userMap.put(user.getUsername(), user);
     }
 
     @Override
-    public Object delete(String username) {
+    public User delete(String username) {
         return userMap.remove(username);
     }
 
