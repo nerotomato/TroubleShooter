@@ -25,7 +25,9 @@ public class RateLimitController {
      * */
 
     /**
-     * 按资源名称限流，需要指定限流处理逻辑
+     * sentinel中设置按资源名称限流，需要指定限流处理逻辑
+     * SentinelResource注解中的value是资源名称，sentinel中配置流控规则时，要按照资源名称配置，才会走到这里的自定义的限流逻辑handleException
+     * 否则走的是默认的限流逻辑，即按照接口访问url限流
      */
     @GetMapping("/byResource")
     @SentinelResource(value = "resource_limit", blockHandler = "handleException")
@@ -34,7 +36,8 @@ public class RateLimitController {
     }
 
     /**
-     * 按URL限流，有默认的限流处理逻辑
+     * sentinel中设置为按URL限流，有默认的限流处理逻辑
+     * blockHandler 限流规则
      */
     @GetMapping("/byUrl")
     @SentinelResource(value = "url_limit", blockHandler = "handleException")

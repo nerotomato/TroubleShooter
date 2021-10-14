@@ -18,8 +18,6 @@ public class MyClassLoader extends ClassLoader {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
     }
 
     //重写ClassLoader的findClass方法

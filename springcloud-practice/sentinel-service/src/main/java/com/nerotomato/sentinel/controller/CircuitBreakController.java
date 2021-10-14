@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * 配置fallback熔断规则
  * @author nerotomato
  * @create 2021/7/26 下午5:11
  */

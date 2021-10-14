@@ -78,6 +78,12 @@ CREATE USER 'reader'@'%' IDENTIFIED BY '123456';
 GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO 'reader'@'%';
 ```
 
+#授予用户某个数据库的权限
+
+```shell
+GRANT ALL PRIVILEGES ON `mall`.* TO 'reader'@'%';
+```
+
 #mysql8.0需要修改plugin为mysql_native_password
 
 ```sql
@@ -118,7 +124,7 @@ show slave status \G;
 #重启从库复制相关线程
 
 ```sql
-stop slave; 
+stop slave;
 start slave;
 ```
 
@@ -131,7 +137,7 @@ reset slave;
 #查看主库日志报错位置
 
 ```shell
-mysqlbinlog --no-defaults -vv --base64-output=DECODE-ROWS /var/lib/mysql/mysql-bin.000025 |grep -A '10' 535
+mysqlbinlog --no-defaults -vv --base64-output=DECODE-ROWS /var/lib/mysql/mysql-bin.000118 |grep -A '452' 
 ```
 
 #跳过当前事务
