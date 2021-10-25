@@ -2,6 +2,9 @@ package com.nerotomato.object;
 
 import java.io.IOException;
 
+/**
+ * JVM对象逃逸分析
+ * */
 public class EscapeAnalysis {
 
     public static Object globalObject;
@@ -41,15 +44,3 @@ public class EscapeAnalysis {
     }
 }
 
-class User {
-    int age;
-    String name;
-
-    public User(int age) {
-        this.age = age;
-    }
-
-    public int getAge() {
-        return age;
-    }
-}
