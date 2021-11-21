@@ -18,6 +18,16 @@ chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
+**注意**：如果`docker-compose`安装后命令失败，请检查您的路径。您还可以`/usr/bin`在路径中创建指向或任何其他目录的符号链接。
+
+例如：
+
+```shell
+$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+```
+
+
+
 # 2.docker compose搭建elasticsearch集群、kibana、logstash服务
 
 **编写docker-compose.yml文件**
