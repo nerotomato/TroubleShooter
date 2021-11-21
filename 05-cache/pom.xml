@@ -5,10 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nerotomato</groupId>
-    <artifactId>cache-practice</artifactId>
+    <artifactId>05-cache</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>springboot-cache</module>
+        <module>springboot-redisson</module>
     </modules>
     <packaging>pom</packaging>
 
