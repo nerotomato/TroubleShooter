@@ -30,6 +30,31 @@ docker run --restart=always --privileged=true \
  -p 3306:3306 --name mysql-master -e MYSQL_ROOT_PASSWORD=123456 -d mysql:latest
 ```
 
+Mac环境创建
+
+```shell
+docker run --restart=always --privileged=true \
+ -v /Users/nerotomato/Develop/docker/mysql-server/mysql-files:/var/lib/mysql-files \
+ -v /Users/nerotomato/Develop/docker/mysql-server/log:/var/log/mysql \
+ -v /Users/nerotomato/Develop/docker/mysql-server/data:/var/lib/mysql \
+ -v /Users/nerotomato/Develop/docker/mysql-server/my.cnf:/etc/mysql/my.cnf \
+ -v /Users/nerotomato/Develop/docker/mysql-server/conf.d:/etc/mysql/conf.d \
+ -e TZ=Asia/Shanghai \
+ -p 3306:3306 --name mysql-server -e MYSQL_ROOT_PASSWORD=123456 -d mysql/mysql-server:8.0.27
+```
+
+**配置文件my.cnf**
+
+```properties
+[mysqld]
+server-id=1
+log-bin=mysql-bin
+binlog-format=mixed  #二进制日志格式
+sync-binlog=1        #确保binlog日志写入后与硬盘同步
+expire_logs_days=30  #自动清理30天前的日志文件
+skip_name_resolve=ON #跳过反向域名解析
+```
+
 **#从数据库**
 
 **windows下创建**
@@ -65,6 +90,12 @@ docker run --restart=always --privileged=true \
 
 
 #修改容器中/etc/mysql/my.cnf 文件权限为644，否则mysql会忽略该文件。因为如果是权限777，任何一个用户都可以改my.cnf，存在很大的安全隐患。
+
+#开启root用户远程连接的权限
+
+```sql
+update user set host='%' where user='root';
+```
 
 #登录主库，创建用户
 
