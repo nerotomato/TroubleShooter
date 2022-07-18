@@ -12,6 +12,7 @@
 
     <modules>
         <module>commons-email-demo</module>
+        <module>springboot-mail-demo</module>
     </modules>
 
     <parent>
@@ -25,4 +26,10 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 </project>
