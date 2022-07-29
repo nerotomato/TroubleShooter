@@ -13,6 +13,7 @@
     <modules>
         <module>commons-email-demo</module>
         <module>springboot-mail-demo</module>
+        <module>sendcloud-mail-demo</module>
     </modules>
 
     <parent>
